@@ -16,6 +16,9 @@ package com.rtvello
 	{
 		[Embed(source="../../../res/img/vazi.jpg")]
 		private var imgVazi:Class;
+		
+		[Embed(source="../../../res/img/grape.jpg")]
+		private var imgGrape:Class;
 			
 		public function Main():void 
 		 {
@@ -46,26 +49,26 @@ addChild(rectangle); // adds the rectangle to the stage
 
 			
 			var Vazi1:Bitmap = new imgVazi();
-			var vazi1ratio:int = Vazi1.width / Vazi1.height;
+			var vazi1ratio:Number = Vazi1.width / Vazi1.height;
 			Vazi1.height = SCENE_HEIGHT;
-			Vazi1.width = SCENE_HEIGHT / vazi1ratio;
+			Vazi1.width = Vazi1.height * vazi1ratio;
 			var Vazi2:Bitmap = new imgVazi();
-			var vazi2ratio:int = Vazi2.width / Vazi2.height;
+			var vazi2ratio:Number = Vazi2.width / Vazi2.height;
 			Vazi2.height = SCENE_HEIGHT;
-			Vazi2.width = SCENE_HEIGHT / vazi2ratio;
+			Vazi2.width = Vazi2.height * vazi2ratio;
 			Vazi2.x = Vazi1.x + Vazi1.width;
 			var Vazi3:Bitmap = new imgVazi();
-			var vazi3ratio:int = Vazi3.width / Vazi3.height;
+			var vazi3ratio:Number = Vazi3.width / Vazi3.height;
 			Vazi3.height = SCENE_HEIGHT;
-			Vazi3.width = SCENE_HEIGHT / vazi3ratio;
+			Vazi3.width = Vazi3.height * vazi3ratio;
 			Vazi3.x = Vazi2.x + Vazi2.width;
 			_game.addChild(Vazi1);
 			_game.addChild(Vazi2);
 			_game.addChild(Vazi3);
 			/*Vazi1.*/addEventListener(Event.ENTER_FRAME, function(e:Event):void {
-				Vazi1.x -= 10;
-				Vazi2.x -= 10;
-				Vazi3.x -= 10;
+				Vazi1.x -= 5;
+				Vazi2.x -= 5;
+				Vazi3.x -= 5;
 				//if the vineyard on the left goes out of screen, move it to the right
 				if (Vazi1.x < Vazi2.x && Vazi1.x < Vazi3.x 
 					&& Vazi1.x <= (-20 - Vazi1.width)) { Vazi1.x = Math.max(Vazi2.x, Vazi3.x) + Vazi1.width; }
@@ -74,6 +77,11 @@ addChild(rectangle); // adds the rectangle to the stage
 				if (Vazi3.x < Vazi1.x && Vazi3.x < Vazi2.x 
 					&& Vazi3.x <= (-20 - Vazi3.width)) { Vazi3.x = Math.max(Vazi1.x, Vazi2.x) + Vazi3.width; }
 			});
+			
+			
+			
+			
+			
 			
 		}
 		
