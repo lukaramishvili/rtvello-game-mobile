@@ -23,8 +23,11 @@ package com.rtvello
 		private var _cCorrectFruits:int = 0;
 		private var _cIncorrectFruits:int = 0;
 		
+		private var nPointPerFruit:int = 5;
+		
 		public function getScore():int {
-			return _cCorrectFruits - _cIncorrectFruits;
+			//don't allow negative score
+			return Math.max(0, _cCorrectFruits - _cIncorrectFruits) * nPointPerFruit;
 		}
 		
 		public function Basket(basketType:String) 
@@ -45,18 +48,20 @@ package com.rtvello
 		}
 		
 		public function addFruit(f:Fruit):void {
-			var fCorrectAnswer:Boolean = false;
+			var fCorrectFruit:Boolean = false;
 			switch (this.eBasketType) {
 				case BASKET_TYPE_HARVEST:
 					f.fGoodQuality ? _cCorrectFruits++ : _cIncorrectFruits++;
-					fCorrectAnswer = f.fGoodQuality;
+					fCorrectFruit = f.fGoodQuality;
 					break;
 				case BASKET_TYPE_GARBAGE:
 					f.fGoodQuality ? _cIncorrectFruits++ : _cCorrectFruits++;
-					fCorrectAnswer = !f.fGoodQuality;
+					fCorrectFruit = !f.fGoodQuality;
 					break;
 			}
-			new EventDispatcher(this).dispatchEvent(new BasketUpdatedEvent(fCorrectAnswer));
+			var updateEvent:BasketUpdatedEvent = new BasketUpdatedEvent(BasketUpdatedEvent.BASKET_UPDATED);
+			updateEvent.fCorrectAnswer = fCorrectFruit;
+			dispatchEvent(updateEvent);
 		}
 		
 		
