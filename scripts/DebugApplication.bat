@@ -32,7 +32,7 @@ FOR /F "tokens=2 delims=:" %%a in (TEMPIP.txt) do (
 )
 :ipfound
 del TEMPIP.txt
-set IP=192.168.88.251
+set IP=127.0.0.1
 ::%IP:~1%
 echo debug with ip: %IP%
 
