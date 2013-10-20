@@ -7,6 +7,9 @@ package com.rtvello
 	import flash.display.Sprite;
 	import flash.display.StageOrientation;
 	import flash.events.Event;
+	import flash.events.TouchEvent;
+	import flash.ui.Multitouch;
+	import flash.ui.MultitouchInputMode;
 	
 	/**
 	 * ...
@@ -27,6 +30,7 @@ package com.rtvello
 						
 			//zero: forgive me for the unstructured code that just works
 			stage.setOrientation(StageOrientation.DEFAULT);
+			Multitouch.inputMode = MultitouchInputMode.TOUCH_POINT;
 			
 			var _game:MovieClip = new MovieClip();
 			//_game.width = stage.width;
@@ -36,7 +40,7 @@ package com.rtvello
 			addChild(_game);
 			//_game.width = 800;
 			//_game.height = 800;
-			var SCENE_WIDTH:int = 1500;
+			var SCENE_WIDTH:int = 1300;
 			var SCENE_HEIGHT:int = 800;
 			var SLIDE_RATE:int = 3;
 			
@@ -85,20 +89,34 @@ addChild(rectangle); // adds the rectangle to the stage
 				
 				//add grapes in 3-sec intervals
 				if(lastGrapeAddTime/1000 < ((new Date()).time/1000 - 2)){
-					var nextGrape:Fruit = new Fruit();
+					var nextGrape:Fruit = new Fruit(Math.random() > 0.25);
 					nextGrape.x = SCENE_WIDTH - 100;
 					//the vitis(vazi) part takes roughly 1/3 v space so place grapes there
 					nextGrape.y = SCENE_HEIGHT / 3 + Math.random() * SCENE_HEIGHT / 4;
 					_game.addChild(nextGrape);
 					nextGrape.addEventListener(Event.ENTER_FRAME, function(e:Event):void { e.currentTarget.x -= SLIDE_RATE; } );
+					nextGrape.addEventListener(TouchEvent.TOUCH_BEGIN, function(e:TouchEvent):void {
+						e.target.startTouchDrag(e.touchPointID);
+					});
+					nextGrape.addEventListener(TouchEvent.TOUCH_END, function(e:TouchEvent):void {
+						e.target.stopTouchDrag(e.touchPointID);
+					});
 					lastGrapeAddTime = (new Date()).time;
 				}
 			});
 			
-			var basket:Basket = new Basket();
-			basket.x = 20;
-			basket.y = SCENE_HEIGHT - 155;
-			_game.addChild(basket);
+			var harvest:Basket = new Basket(Basket.BASKET_TYPE_HARVEST);
+			harvest.x = 20;
+			harvest.y = SCENE_HEIGHT - 155;
+			_game.addChild(harvest);
+			harvest.addEventListener(BasketUpdatedEvent, function(e:BasketUpdatedEvent):void {
+				harvest.visible = false;
+			});
+			
+			var garbage:Basket = new Basket(Basket.BASKET_TYPE_GARBAGE);
+			garbage.x = SCENE_WIDTH / 2;
+			garbage.y = SCENE_HEIGHT - 155;
+			_game.addChild(garbage);
 		}
 		
 	}
