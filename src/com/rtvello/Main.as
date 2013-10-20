@@ -46,7 +46,7 @@ package com.rtvello
 			//_game.height = 800;
 			var SCENE_WIDTH:int = 1300;
 			var SCENE_HEIGHT:int = 800;
-			var SLIDE_RATE:int = 4;
+			var SLIDE_RATE:int = 6;
 			
 			var rectangle:Shape = new Shape; // initializing the variable named rectangle
 rectangle.graphics.beginFill(0xFF0000); // choosing the colour for the fill, here it is red
@@ -152,11 +152,11 @@ addChild(rectangle); // adds the rectangle to the stage
 			
 			//scoreboard
 			var txtScore:TextField = new TextField();
-			txtScore.defaultTextFormat = new TextFormat(null, 96, 0x000000);
+			txtScore.defaultTextFormat = new TextFormat(null, 36, 0x000000);
 			txtScore.text = "0";
 			txtScore.x = 150;
 			txtScore.y = 10;
-			txtScore.width = 500;
+			txtScore.width = 1000;
 			txtScore.height = 200;
 			_game.addChild(txtScore);
 		}
