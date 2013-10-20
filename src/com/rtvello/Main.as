@@ -134,7 +134,7 @@ addChild(rectangle); // adds the rectangle to the stage
 			harvest.y = SCENE_HEIGHT - 155;
 			_game.addChild(harvest);
 			harvest.addEventListener(BasketUpdatedEvent.BASKET_UPDATED, function(e:BasketUpdatedEvent):void {
-				updateScore(harvest.getScore() + garbage.getScore());
+				updateScore(harvest.getScore());
 			});
 			
 			//garbage can (throw !fGoodQuality Fruits here
@@ -143,22 +143,24 @@ addChild(rectangle); // adds the rectangle to the stage
 			garbage.y = SCENE_HEIGHT - 155;
 			_game.addChild(garbage);
 			garbage.addEventListener(BasketUpdatedEvent.BASKET_UPDATED, function(e:BasketUpdatedEvent):void {
-				updateScore(harvest.getScore() + garbage.getScore());
+				updateScore(harvest.getScore());
 			});
 			
 			function updateScore(score:int):void {
-				txtScore.text = score.toString() + " points, wine potential - " + (0.175 * score / 5) + " liters";
+				txtScore.text = Math.max(0, score).toString() + " points, wine potential - " 
+					+ Math.max(0.0, (0.175 * score / 5)).toPrecision(2).toString() + " liters";
 			}
 			
 			//scoreboard
 			var txtScore:TextField = new TextField();
 			txtScore.defaultTextFormat = new TextFormat(null, 36, 0x000000);
-			txtScore.text = "0";
 			txtScore.x = 150;
 			txtScore.y = 10;
 			txtScore.width = 1000;
 			txtScore.height = 200;
 			_game.addChild(txtScore);
+			//first time
+			updateScore(0);
 		}
 		
 	}

@@ -26,8 +26,7 @@ package com.rtvello
 		private var nPointPerFruit:int = 5;
 		
 		public function getScore():int {
-			//don't allow negative score
-			return Math.max(0, _cCorrectFruits - _cIncorrectFruits) * nPointPerFruit;
+			return (_cCorrectFruits - _cIncorrectFruits) * nPointPerFruit;
 		}
 		
 		public function Basket(basketType:String) 
